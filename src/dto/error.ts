@@ -1,3 +1,3 @@
 export interface IErrorDto {
-  message: string
+  message: string;
 }
