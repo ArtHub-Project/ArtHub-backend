@@ -9,12 +9,11 @@ export default class ProductHandler implements IProductHandler {
     req,
     res
   ) => {
-    try {
-      const result = await this.repo.getAllProducts();
-      const productResponse = result.map((product) => {
-        return productMapper(product);
-      });
-      return res.status(200).json(productResponse).end();
-    } catch (error) {}
+    const result = await this.repo.getAllProducts();
+    const productResponse = result.map((product) => {
+      return productMapper(product);
+    });
+
+    return res.status(200).json(productResponse).end();
   };
 }
