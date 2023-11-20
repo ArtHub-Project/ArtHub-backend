@@ -8,3 +8,4 @@ export const hashPassword = (plaintext: string): string => {
 export const verifyPassword = (plaintext: string, hashVal: string): boolean => {
   return compareSync(plaintext, hashVal);
 };
+
