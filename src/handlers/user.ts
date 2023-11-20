@@ -1,6 +1,6 @@
 import {RequestHandler} from "express"
 import {IUserHandler} from "."
-import {IUserRepository} from "../repository"
+import {IUserRepository} from "../repositories"
 import {ICreateUserDto, IUserDto} from "../dto/user"
 import {IErrorDto} from "../dto/error"
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library"
@@ -26,12 +26,7 @@ export default class UserHandler implements IUserHandler {
       return res.status(400).json({message: "password is invalid"}).end()
 
     try {
-      const {
-        id: registeredId,
-        name: registeredName,
-        username: registeredUsername,
-        registeredAt,
-      } = await this.repo.create({
+      const {id, registeredAt} = await this.repo.create({
         name,
         username,
         password: hashPassword(password),
@@ -40,10 +35,10 @@ export default class UserHandler implements IUserHandler {
         bio: "",
       })
       return res.status(201).json({
-        id: registeredId,
-        name: registeredName,
+        id,
+        name,
         registeredAt: `${registeredAt}`,
-        username: registeredUsername,
+        username,
       })
     } catch (error) {
       if (

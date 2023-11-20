@@ -1,9 +1,9 @@
 import {PrismaClient} from "@prisma/client"
 import express from "express"
-import {IUserRepository} from "./repository"
-import UserRepository from "./repository/user"
-import {IUserHandler} from "./handler"
-import UserHandler from "./handler/user"
+import {IUserRepository} from "./repositories"
+import UserRepository from "./repositories/user"
+import {IUserHandler} from "./handlers"
+import UserHandler from "./handlers/user"
 
 const PORT = Number(process.env.PORT || 8888)
 const app = express()
