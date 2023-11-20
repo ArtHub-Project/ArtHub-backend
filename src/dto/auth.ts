@@ -5,4 +5,4 @@ export interface ILoginDto {
 
 export interface ICredentialDto {
   accessToken: string;
-
+}

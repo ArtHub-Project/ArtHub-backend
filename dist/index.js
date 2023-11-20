@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const express_1 = __importDefault(require("express"));
-const user_1 = __importDefault(require("./repository/user"));
-const user_2 = __importDefault(require("./handler/user"));
+const user_1 = __importDefault(require("./repositories/user"));
+const user_2 = __importDefault(require("./handlers/user"));
 const PORT = Number(process.env.PORT || 8888);
 const app = (0, express_1.default)();
 const clnt = new client_1.PrismaClient();
@@ -17,7 +17,10 @@ app.get("/", (req, res) => {
     return res.status(200).send("Welcome to ArtHub");
 });
 const userRouter = express_1.default.Router();
+const authRouter = express_1.default.Router();
 app.use("/user", userRouter);
+app.use("/auth", authRouter);
+authRouter.post("/login", userHandler.login);
 userRouter.post("/", userHandler.registration);
 app.listen(PORT, () => {
     console.log(`ArtHub is up at ${PORT}`);

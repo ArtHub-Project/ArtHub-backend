@@ -1,9 +1,12 @@
-
 import { sign } from "jsonwebtoken";
 import { IUserHandler } from ".";
 import { IUserRepository } from "../repositories";
 import { verifyPassword, hashPassword } from "../utils/bcrypt";
 import { JWT_SECRET } from "../const";
+import { RequestHandler } from "express";
+import { ICreateUserDto, IUserDto } from "../dto/user";
+import { IErrorDto } from "../dto/error";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export default class UserHandler implements IUserHandler {
   constructor(private repo: IUserRepository) {}
@@ -39,29 +42,29 @@ export default class UserHandler implements IUserHandler {
     IUserDto | IErrorDto,
     ICreateUserDto
   > = async (req, res) => {
-    const {name, username, password} = req.body
+    const { name, username, password } = req.body;
     if (typeof name !== "string" || name.length === 0)
-      return res.status(400).json({message: "name is invalid"}).end()
+      return res.status(400).json({ message: "name is invalid" }).end();
     if (typeof username !== "string" || username.length === 0)
-      return res.status(400).json({message: "username is invalid"}).end()
+      return res.status(400).json({ message: "username is invalid" }).end();
     if (typeof password !== "string" || password.length < 5)
-      return res.status(400).json({message: "password is invalid"}).end()
+      return res.status(400).json({ message: "password is invalid" }).end();
 
     try {
-      const {id, registeredAt} = await this.repo.create({
+      const { id, registeredAt } = await this.repo.create({
         name,
         username,
         password: hashPassword(password),
         email: "",
         imageUrl: "",
         bio: "",
-      })
+      });
       return res.status(201).json({
         id,
         name,
         registeredAt: `${registeredAt}`,
         username,
-      })
+      });
     } catch (error) {
       if (
         error instanceof PrismaClientKnownRequestError &&
@@ -72,15 +75,14 @@ export default class UserHandler implements IUserHandler {
           .json({
             message: `name is invalid`,
           })
-          .end()
+          .end();
       }
       return res
         .status(500)
         .json({
           message: `Internal Server Error`,
         })
-        .end()
+        .end();
     }
-  }
-
+  };
 }

@@ -7,5 +7,7 @@ const hashPassword = (plaintext) => {
     return (0, bcryptjs_1.hashSync)(plaintext, salt);
 };
 exports.hashPassword = hashPassword;
-const verifyPassword = (plaintext, hashVal) => (0, bcryptjs_1.compareSync)(plaintext, hashVal);
+const verifyPassword = (plaintext, hashVal) => {
+    return (0, bcryptjs_1.compareSync)(plaintext, hashVal);
+};
 exports.verifyPassword = verifyPassword;
