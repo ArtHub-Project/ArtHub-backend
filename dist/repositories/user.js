@@ -29,5 +29,13 @@ class UserRepository {
             });
         });
     }
+    findById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.prisma.user.findUniqueOrThrow({
+                where: { id },
+                select: const_1.DATA_USER_SELECT,
+            });
+        });
+    }
 }
 exports.default = UserRepository;

@@ -1,9 +1,10 @@
-import { User } from "@prisma/client";
-import {ICreateUserDto} from "../dto/user"
+import {User} from "@prisma/client"
+import {ICreateUserDto, IUserDto} from "../dto/user"
 
 export interface IUserRepository {
-  findByUsername(username: string): Promise<User>;
+  findByUsername(username: string): Promise<User>
   create(user: ICreateUserDto): Promise<IUser>
+  findById(id: string): Promise<IUser>
 }
 
 export interface IUser {
@@ -12,4 +13,3 @@ export interface IUser {
   username: string
   registeredAt: Date
 }
-
