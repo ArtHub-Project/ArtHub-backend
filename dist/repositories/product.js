@@ -7,11 +7,7 @@ class ProductRepository {
     }
     getAllProducts() {
         return this.prisma.product.findMany({
-            include: {
-                User: {
-                    select: const_1.DATA_USER_SELECT,
-                },
-            },
+            select: const_1.DATA_PRODUCT_SELECT,
         });
     }
     getProductById(id) {
