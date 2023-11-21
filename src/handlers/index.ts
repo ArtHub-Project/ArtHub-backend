@@ -20,6 +20,5 @@ export interface IUserHandler {
 
 export interface IProductHandler {
   getAllProducts: RequestHandler<{}, IProductDto[] | IErrorDto>;
-  getProductById: RequestHandler<{id:string}, IProduct | IErrorDto>;
-
+  getProductById: RequestHandler<{ id: string }, IProduct | IErrorDto>;
 }

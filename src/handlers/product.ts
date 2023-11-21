@@ -17,18 +17,19 @@ export default class ProductHandler implements IProductHandler {
     return res.status(200).json(productResponse).end();
   };
 
-  public getProductById: IProductHandler["getProductById"] = async (req,res) => {
+  public getProductById: IProductHandler["getProductById"] = async (
+    req,
+    res
+  ) => {
     try {
-      const id = Number(req.params.id)
-      const result = await this.repo.getProductById(id)
-      return res.status(200).json(result).end()
+      const id = Number(req.params.id);
+      const result = await this.repo.getProductById(id);
+      return res.status(200).json(result).end();
     } catch (error) {
       if (error instanceof Error) {
-        return res.status(400).json({message: error.message}).end()
+        return res.status(400).json({ message: error.message }).end();
+      }
+      return res.status(500).json({ message: "internal server error" }).end();
     }
-    return res.status(500).json({message: "internal server error"}).end()
-
-  }
-}
-
+  };
 }

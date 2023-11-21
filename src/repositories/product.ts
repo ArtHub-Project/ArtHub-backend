@@ -13,12 +13,8 @@ export default class ProductRepository implements IProductRepository {
   }
   public getProductById(id: number): Promise<IProduct> {
     return this.prisma.product.findUniqueOrThrow({
-      where: {id},
-      include: {
-        User: {
-          select: DATA_USER_SELECT,
-        },
-      },
-    })
+      where: { id },
+      select: DATA_PRODUCT_SELECT,
+    });
   }
 }
