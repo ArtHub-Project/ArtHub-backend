@@ -4,6 +4,7 @@ import { IErrorDto } from "../dto/error";
 import { ICreateUserDto, IUserDto } from "../dto/user";
 import { AuthStatus } from "../middlewares/jwt";
 import { IProductDto } from "../dto/product";
+import { IProduct } from "../repositories";
 
 export interface IUserHandler {
   login: RequestHandler<{}, ICredentialDto | IErrorDto, ILoginDto>;
@@ -19,4 +20,6 @@ export interface IUserHandler {
 
 export interface IProductHandler {
   getAllProducts: RequestHandler<{}, IProductDto[] | IErrorDto>;
+  getProductById: RequestHandler<{id:string}, IProduct | IErrorDto>;
+
 }

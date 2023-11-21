@@ -14,5 +14,15 @@ class ProductRepository {
             },
         });
     }
+    getProductById(id) {
+        return this.prisma.product.findUniqueOrThrow({
+            where: { id },
+            include: {
+                User: {
+                    select: const_1.DATA_USER_SELECT,
+                },
+            },
+        });
+    }
 }
 exports.default = ProductRepository;

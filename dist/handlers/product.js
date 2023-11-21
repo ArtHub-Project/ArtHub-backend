@@ -17,14 +17,24 @@ class ProductHandler {
     constructor(repo) {
         this.repo = repo;
         this.getAllProducts = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.repo.getAllProducts();
+            const productResponse = result.map((product) => {
+                return (0, product_mapper_1.default)(product);
+            });
+            return res.status(200).json(productResponse).end();
+        });
+        this.getProductById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this.repo.getAllProducts();
-                const productResponse = result.map((product) => {
-                    return (0, product_mapper_1.default)(product);
-                });
-                return res.status(200).json(productResponse).end();
+                const id = Number(req.params.id);
+                const result = yield this.repo.getProductById(id);
+                return res.status(200).json(result).end();
             }
-            catch (error) { }
+            catch (error) {
+                if (error instanceof Error) {
+                    return res.status(400).json({ message: error.message }).end();
+                }
+                return res.status(500).json({ message: "internal server error" }).end();
+            }
         });
     }
 }
