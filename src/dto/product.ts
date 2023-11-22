@@ -6,7 +6,8 @@ export interface IProductDto {
   imageUrl: string;
   description: string;
   price: number;
-  quantity: number;
+  type: string;
+  collection: string;
   createdAt: string;
   updatedAt: string;
   postedBy: IUserDto;
