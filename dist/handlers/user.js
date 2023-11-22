@@ -65,6 +65,7 @@ class UserHandler {
                     email: "",
                     imageUrl: "",
                     bio: "",
+                    address: "",
                 });
                 return res.status(201).json({
                     id,
@@ -91,7 +92,7 @@ class UserHandler {
                     .end();
             }
         });
-        this.selfcheck = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getPersonalInfo = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const _a = yield this.repo.findById(res.locals.user.id), { registeredAt } = _a, others = __rest(_a, ["registeredAt"]);
                 return res

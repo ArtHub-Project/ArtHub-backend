@@ -9,7 +9,7 @@ import { IProduct } from "../repositories";
 export interface IUserHandler {
   login: RequestHandler<{}, ICredentialDto | IErrorDto, ILoginDto>;
   registration: RequestHandler<{}, IUserDto | IErrorDto, ICreateUserDto>;
-  selfcheck: RequestHandler<
+  getPersonalInfo: RequestHandler<
     {},
     IUserDto | IErrorDto,
     unknown,

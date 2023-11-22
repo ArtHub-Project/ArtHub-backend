@@ -35,13 +35,12 @@ app.use("/auth", authRouter);
 app.use("/product", productRouter);
 
 authRouter.post("/login", userHandler.login);
-authRouter.get("/me", jwtMiddleware.auth, userHandler.selfcheck);
+authRouter.get("/me", jwtMiddleware.auth, userHandler.getPersonalInfo);
 
 userRouter.post("/", userHandler.registration);
 
 productRouter.get("/", productHandler.getAllProducts);
 productRouter.get("/:id", productHandler.getProductById);
-
 
 app.listen(PORT, () => {
   console.log(`ArtHub is up at ${PORT}`);
