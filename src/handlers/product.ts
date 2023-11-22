@@ -23,6 +23,7 @@ export default class ProductHandler implements IProductHandler {
   ) => {
     try {
       const id = Number(req.params.id);
+      if (isNaN(id)) throw new Error("Id isNaN");
       const result = await this.repo.getProductById(id);
       return res.status(200).json(result).end();
     } catch (error) {
