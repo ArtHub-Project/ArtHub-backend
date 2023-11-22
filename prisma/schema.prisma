@@ -20,18 +20,111 @@ model User {
   bio          String
   registeredAt DateTime  @default(now())
   updatedAt    DateTime  @default(now())
+  cartId       Int?
   Product      Product[]
+  Blog         Blog[]
+  Event        Event[]
+  Address      Address[]
+  Cart         Cart?
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
   imageUrl    String
   description String
   price       Int
   quantity    Int
-  createdAt   DateTime @default(now())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  User        User         @relation(fields: [userId], references: [id])
+  userId      String       @db.Uuid
+  CartItem    CartItem[]
+  Type        Type[]
+  Collection  Collection[]
+  OrderItem   OrderItem[]
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  User      User       @relation(fields: [userId], references: [id])
+  userId    String     @unique @db.Uuid
+  CartItem  CartItem[]
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    Int
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Type {
+  id        Int      @id @default(autoincrement())
+  name      String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Collection {
+  id        Int      @id @default(autoincrement())
+  name      String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Address {
+  id            Int     @id @default(autoincrement())
+  address_title String
+  city          String  @db.VarChar(255)
+  state         String  @db.VarChar(255)
+  zip_code      String  @db.VarChar(255)
+  country       String  @db.VarChar(255)
+  mobile        String  @db.VarChar(25)
+  User          User    @relation(fields: [userId], references: [id])
+  userId        String  @db.Uuid
+  Order         Order[]
+}
+
+model Order {
+  id        String      @id @default(uuid()) @db.Uuid
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+  Address   Address     @relation(fields: [addressId], references: [id])
+  addressId Int
+  OrderItem OrderItem[]
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  total     Int
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.Uuid
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime @default(now()) @map("createdAt")
   updatedAt   DateTime @default(now())
-  User        User     @relation(fields: [userId], references: [id])
-  userId      String   @db.Uuid
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?  @db.Uuid
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime @default(now()) @map("createdAt")
+  updatedAt   DateTime @default(now())
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?  @db.Uuid
 }
