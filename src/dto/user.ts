@@ -1,16 +1,12 @@
 export interface IUserDto {
-  id: string;
-  username: string;
-  name: string;
-  registeredAt: string;
+  id: string
+  username: string
+  name: string
+  registeredAt: string
 }
 
 export interface ICreateUserDto {
-  name: string;
-  username: string;
-  password: string;
-  email: string;
-  imageUrl: string;
-  bio: string;
-  address: string;
+  name: string
+  username: string
+  password: string
 }

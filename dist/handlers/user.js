@@ -62,10 +62,6 @@ class UserHandler {
                     name,
                     username,
                     password: (0, bcrypt_1.hashPassword)(password),
-                    email: "",
-                    imageUrl: "",
-                    bio: "",
-                    address: "",
                 });
                 return res.status(201).json({
                     id,
