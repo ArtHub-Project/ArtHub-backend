@@ -26,6 +26,8 @@ class ProductHandler {
         this.getProductById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const id = Number(req.params.id);
+                if (isNaN(id))
+                    throw new Error("Id isNaN");
                 const result = yield this.repo.getProductById(id);
                 return res.status(200).json(result).end();
             }
