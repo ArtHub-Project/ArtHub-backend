@@ -47,3 +47,25 @@ export const DATA_CART_SELECT: Prisma.CartSelect = {
   User: {select: {id: true, name: true}},
   CartItem: {select: DATA_CART_ITEM_SELECT},
 }
+
+export const DATA_ORDER_ITEM_SELECT: Prisma.OrderItemSelect = {
+  id: true,
+  productId: true,
+  Product: {
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      price: true,
+      type: true,
+    },
+  },
+}
+
+export const DATA_ORDER_SELECT: Prisma.OrderSelect = {
+  id: true,
+  total: true,
+  createdAt: true,
+  User: {select: {id: true, name: true}},
+  OrderItem: {select: DATA_ORDER_ITEM_SELECT},
+}

@@ -11,12 +11,14 @@ export default class UserRepository implements IUserRepository {
       where: {username},
     })
   }
+
   public async create(user: ICreateUserDto): Promise<IUser> {
     return await this.prisma.user.create({
       data: user,
       select: DATA_USER_SELECT,
     })
   }
+
   public async findById(id: string): Promise<IUser> {
     return await this.prisma.user.findUniqueOrThrow({
       where: {id},

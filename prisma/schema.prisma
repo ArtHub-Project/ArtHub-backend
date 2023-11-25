@@ -15,10 +15,10 @@ model User {
   name         String
   username     String    @unique
   password     String
-  email        String    @unique
-  imageUrl     String
-  bio          String
-  address      String
+  email        String?   @unique
+  imageUrl     String?
+  bio          String?
+  address      String?
   registeredAt DateTime  @default(now())
   updatedAt    DateTime  @default(now())
   Product      Product[]
@@ -63,15 +63,15 @@ model Order {
   id        String      @id @default(uuid()) @db.Uuid
   total     Int
   createdAt DateTime    @default(now())
-  OrderItem OrderItem[]
   User      User        @relation(fields: [userId], references: [id])
   userId    String      @db.Uuid
+  OrderItem OrderItem[]
 }
 
 model OrderItem {
-  id        Int      @id @default(autoincrement())
-  Product   Product? @relation(fields: [productId], references: [id])
+  id        Int     @id @default(autoincrement())
+  Product   Product @relation(fields: [productId], references: [id])
   productId Int
-  Order     Order    @relation(fields: [orderId], references: [id])
-  orderId   String   @db.Uuid
+  Order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String  @db.Uuid
 }

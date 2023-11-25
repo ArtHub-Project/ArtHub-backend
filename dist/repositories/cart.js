@@ -5,14 +5,17 @@ class CartRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    getCarts(id) {
-        return this.prisma.cart.findUniqueOrThrow({
-            where: { id: id },
+    getCarts(userId) {
+        return this.prisma.cart.findMany({
+            where: {
+                User: {
+                    id: userId,
+                },
+            },
             select: const_1.DATA_CART_SELECT,
         });
     }
-    addCart(userId, total) {
-        console.log(userId, total);
+    createCart(userId, total) {
         return this.prisma.cart.create({
             data: {
                 total,
@@ -23,7 +26,7 @@ class CartRepository {
             select: const_1.DATA_CART_SELECT,
         });
     }
-    createCartItem(productId, cartId) {
+    addCartItem(productId, cartId) {
         return this.prisma.cartItem.create({
             data: {
                 cartId,

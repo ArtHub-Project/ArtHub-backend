@@ -11,12 +11,11 @@ export default class CartHandler implements ICartHandler {
     res
   ) => {
     try {
-      const id = req.body
-      const {
-        id: Id,
-        total,
-        ...resultCart
-      } = await this.repoCart.getCarts(Number(id.id))
+      const {id} = req.body
+
+      const [{id: Id, total, ...resultCart}] = await this.repoCart.getCarts(
+        res.locals.user.id
+      )
       let sum = 0
       for (let i = 0; i < resultCart.CartItem.length; i++) {
         const {price} = await this.repoProduct.getProductById(
@@ -53,14 +52,13 @@ export default class CartHandler implements ICartHandler {
 
   public addCartItem: ICartHandler["addCartItem"] = async (req, res) => {
     try {
-      const {productId, cartId} = req.body
+      const {productId} = req.body
       if (isNaN(productId))
         return res.status(404).json({message: "Not a Number"})
-      const checkCart = await this.repoCart.getCarts(cartId)
-      if (checkCart.User.id !== res.locals.user.id)
+      const checkCart = await this.repoCart.getCarts(res.locals.user.id)
+      if (checkCart[0].User.id !== res.locals.user.id)
         return res.status(403).json({message: "You're not the owner"})
-      const cart = await this.repoCart.addCartItem(productId, cartId)
-      console.log(223)
+      const cart = await this.repoCart.addCartItem(productId, checkCart[0].id)
       return res.status(201).json(cart).end()
     } catch (error) {
       console.log(error)
@@ -78,8 +76,8 @@ export default class CartHandler implements ICartHandler {
     try {
       const {id} = req.body
       if (isNaN(id)) return res.status(404).json({message: "Not a Number"})
-      const cart = await this.repoCart.getCarts(id)
-      if (cart.User.id !== res.locals.user.id)
+      const cart = await this.repoCart.getCarts(res.locals.user.id)
+      if (cart[0].User.id !== res.locals.user.id)
         return res.status(403).json({message: "You're not the owner"})
       const result = await this.repoCart.deleteCartItemById(id)
       return res.status(200).json(result).end()
