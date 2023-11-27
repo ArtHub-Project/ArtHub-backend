@@ -1,38 +1,38 @@
-import {RequestHandler} from "express"
-import {ICredentialDto, ILoginDto} from "../dto/auth"
-import {IErrorDto} from "../dto/error"
-import {ICreateUserDto, IUserDto} from "../dto/user"
-import {AuthStatus} from "../middlewares/jwt"
-import {IProductDto} from "../dto/product"
-import {IOrders, IProduct} from "../repositories"
+import { RequestHandler } from "express";
+import { ICredentialDto, ILoginDto } from "../dto/auth";
+import { IErrorDto } from "../dto/error";
+import { ICreateUserDto, IUserDto } from "../dto/user";
+import { AuthStatus } from "../middlewares/jwt";
+import { IProductDto } from "../dto/product";
+import { IOrders, IProduct } from "../repositories";
 import {
   ICreateCartDto,
   ICartDto,
   ICartItemDto,
   IAddCartItemDto,
   IGetCartsDto,
-} from "../dto/cart"
-import {IOrderDto} from "../dto/order"
+} from "../dto/cart";
+import { IOrderDto } from "../dto/order";
 
 export interface ID {
-  id: number
+  id: number;
 }
 
 export interface IUserHandler {
-  login: RequestHandler<{}, ICredentialDto | IErrorDto, ILoginDto>
-  registration: RequestHandler<{}, IUserDto | IErrorDto, ICreateUserDto>
+  login: RequestHandler<{}, ICredentialDto | IErrorDto, ILoginDto>;
+  registration: RequestHandler<{}, IUserDto | IErrorDto, ICreateUserDto>;
   getPersonalInfo: RequestHandler<
     {},
     IUserDto | IErrorDto,
     unknown,
     undefined,
     AuthStatus
-  >
+  >;
 }
 
 export interface IProductHandler {
-  getAllProducts: RequestHandler<{}, IProductDto[] | IErrorDto>
-  getProductById: RequestHandler<{id: string}, IProduct | IErrorDto>
+  getAllProducts: RequestHandler<{}, IProductDto[] | IErrorDto>;
+  getProductById: RequestHandler<{ id: string }, IProduct | IErrorDto>;
 }
 
 export interface ICartHandler {
@@ -42,36 +42,36 @@ export interface ICartHandler {
     ID,
     undefined,
     AuthStatus
-  >
+  >;
   createCart: RequestHandler<
     {},
     ICartDto | IErrorDto,
     ICreateCartDto,
     undefined,
     AuthStatus
-  >
+  >;
   addCartItem: RequestHandler<
     {},
     ICartItemDto | IErrorDto,
     IAddCartItemDto,
     undefined,
     AuthStatus
-  >
+  >;
   deleteCartItemById: RequestHandler<
     {},
     ICartItemDto | IErrorDto,
     ID,
     undefined,
     AuthStatus
-  >
+  >;
 }
 export interface IOrderHandler {
-  getAllOrder: RequestHandler<{}, IOrders[]>
+  getAllOrder: RequestHandler<{}, IOrders[]>;
   createOrder: RequestHandler<
     {},
     IOrderDto | IErrorDto,
     ID,
     undefined,
     AuthStatus
-  >
+  >;
 }
