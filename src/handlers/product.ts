@@ -14,7 +14,7 @@ export default class ProductHandler implements IProductHandler {
       return productMapper(product);
     });
 
-    return res.status(200).send({ message: "F LIKE API" }).end();
+    return res.status(200).json(productResponse).end();
   };
 
   public getProductById: IProductHandler["getProductById"] = async (
