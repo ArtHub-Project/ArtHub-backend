@@ -11,7 +11,7 @@ class CartRepository {
             select: const_1.DATA_CART_SELECT,
         });
     }
-    addCart(userId, total) {
+    createCart(userId, total) {
         console.log(userId, total);
         return this.prisma.cart.create({
             data: {
@@ -23,7 +23,7 @@ class CartRepository {
             select: const_1.DATA_CART_SELECT,
         });
     }
-    createCartItem(productId, cartId) {
+    addCartItem(productId, cartId) {
         return this.prisma.cartItem.create({
             data: {
                 cartId,

@@ -15,10 +15,10 @@ model User {
   name         String
   username     String    @unique
   password     String
-  email        String    @unique
-  imageUrl     String
-  bio          String
-  address      String
+  email        String?   @unique
+  imageUrl     String?
+  bio          String?
+  address      String?
   registeredAt DateTime  @default(now())
   updatedAt    DateTime  @default(now())
   Product      Product[]

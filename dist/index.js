@@ -12,6 +12,7 @@ const product_1 = __importDefault(require("./repositories/product"));
 const product_2 = __importDefault(require("./handlers/product"));
 const cart_1 = __importDefault(require("./repositories/cart"));
 const cart_2 = __importDefault(require("./handlers/cart"));
+const cors_1 = __importDefault(require("cors"));
 const PORT = Number(process.env.PORT || 8888);
 const app = (0, express_1.default)();
 const clnt = new client_1.PrismaClient();
@@ -22,6 +23,7 @@ const userHandler = new user_2.default(userRepo);
 const productHandler = new product_2.default(productRepo);
 const cartHandler = new cart_2.default(cartRepo, productRepo);
 const jwtMiddleware = new jwt_1.default();
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get("/", (req, res) => {
     return res.status(200).send("Welcome to ArtHub");
@@ -39,10 +41,10 @@ authRouter.get("/me", jwtMiddleware.auth, userHandler.getPersonalInfo);
 userRouter.post("/", userHandler.registration);
 productRouter.get("/", productHandler.getAllProducts);
 productRouter.get("/:id", productHandler.getProductById);
-cartRouter.post("/add", cartHandler.addCartItem);
+cartRouter.post("/add", jwtMiddleware.auth, cartHandler.addCartItem);
 cartRouter.delete("/delete", jwtMiddleware.auth, cartHandler.deleteCartItemById);
 cartRouter.post("/", jwtMiddleware.auth, cartHandler.createCart);
-cartRouter.get("/", jwtMiddleware.auth, cartHandler.getCarts);
+cartRouter.get("/", jwtMiddleware.auth, cartHandler.getAllItemInCart);
 app.listen(PORT, () => {
     console.log(`ArtHub is up at ${PORT}`);
 });
