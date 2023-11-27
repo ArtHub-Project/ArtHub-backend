@@ -18,9 +18,6 @@ export interface ICartDto {
   User: IUser
 }
 
-export interface ICreateCartDto {
-  total: number
-}
 
 export interface IGetCartsDto {
   id: number

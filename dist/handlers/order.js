@@ -43,8 +43,8 @@ class OrderHandler {
                     const { id, productId } = CartItem[i];
                     const dataItem = { orderId, id, productId };
                     OrderItems.push(dataItem);
-                    yield this.repoOrder.createOderItem(CartItem[i].productId, orderId);
-                    yield this.repoCart.deleteCartItemById(CartItem[i].id);
+                    yield this.repoOrder.createOderItem(productId, orderId);
+                    yield this.repoCart.deleteCartItemById(id);
                 }
                 const dataOrder = Object.assign(Object.assign({ id: orderId }, result), { OrderItem: OrderItems });
                 return res.status(200).json(dataOrder).end();

@@ -58,10 +58,26 @@ export interface IOrders {
 export interface IProduct extends Omit<Product, "userId"> {
   User: IUser
 }
+export interface IcreateProduct {
+  name: string;
+  imageUrl: string;
+  description: string;
+  type: string;
+  collection: string;
+  price: number;
+}
+
+export interface IupdateProduct extends IcreateProduct {
+  updatedAt:Date
+}
+
 
 export interface IProductRepository {
   getAllProducts(): Promise<IProduct[]>
   getProductById(id: number): Promise<IProduct>
+  createProduct(userId: string, createProduct: IcreateProduct): Promise<IProduct>
+  updateProduct(id: number, updateProduct: IupdateProduct): Promise<IProduct>
+  deleteProduct(id: number): Promise<IProduct>
 }
 
 export interface ICartRepository {

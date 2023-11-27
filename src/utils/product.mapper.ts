@@ -11,7 +11,7 @@ export default (product: IProduct): IProductDto => {
 
   return {
     ...productInfo,
-    postedBy: {
+    User: {
       ...userInfo,
       registeredAt: registeredAt.toISOString(),
     },

@@ -10,5 +10,23 @@ export interface IProductDto {
   collection: string;
   createdAt: string;
   updatedAt: string;
-  postedBy: IUserDto;
+  User : IUserDto;
+}
+
+export interface IcreateProductDto {
+  name: string;
+  imageUrl: string;
+  description: string;
+  type: string;
+  collection: string;
+  price: number;
+}
+
+export interface IupdateProductDto {
+  name: string;
+  imageUrl: string;
+  description: string;
+  type: string;
+  collection: string;
+  price: number;
 }
