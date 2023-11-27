@@ -4,7 +4,7 @@ import {IErrorDto} from "../dto/error"
 import {ICreateUserDto, IUserDto} from "../dto/user"
 import {AuthStatus} from "../middlewares/jwt"
 import {IProductDto} from "../dto/product"
-import {IProduct} from "../repositories"
+import {IOrders, IProduct} from "../repositories"
 import {
   ICreateCartDto,
   ICartDto,
@@ -12,6 +12,7 @@ import {
   IAddCartItemDto,
   IGetCartsDto,
 } from "../dto/cart"
+import {IOrderDto} from "../dto/order"
 
 export interface ID {
   id: number
@@ -59,6 +60,16 @@ export interface ICartHandler {
   deleteCartItemById: RequestHandler<
     {},
     ICartItemDto | IErrorDto,
+    ID,
+    undefined,
+    AuthStatus
+  >
+}
+export interface IOrderHandler {
+  getAllOrder: RequestHandler<{}, IOrders[]>
+  createOrder: RequestHandler<
+    {},
+    IOrderDto | IErrorDto,
     ID,
     undefined,
     AuthStatus

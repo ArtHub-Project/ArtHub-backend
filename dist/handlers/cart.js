@@ -24,10 +24,10 @@ class CartHandler {
     constructor(repoCart, repoProduct) {
         this.repoCart = repoCart;
         this.repoProduct = repoProduct;
-        this.getCarts = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getAllItemInCart = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = req.body;
-                const _a = yield this.repoCart.getCarts(Number(id.id)), { id: Id, total } = _a, resultCart = __rest(_a, ["id", "total"]);
+                const { id } = req.body;
+                const [_a] = yield this.repoCart.getCarts(res.locals.user.id), { id: Id, total } = _a, resultCart = __rest(_a, ["id", "total"]);
                 let sum = 0;
                 for (let i = 0; i < resultCart.CartItem.length; i++) {
                     const { price } = yield this.repoProduct.getProductById(resultCart.CartItem[i].productId);
@@ -49,7 +49,7 @@ class CartHandler {
         this.createCart = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { total = 0 } = req.body;
-                const dataCart = yield this.repoCart.addCart(res.locals.user.id, total);
+                const dataCart = yield this.repoCart.createCart(res.locals.user.id, total);
                 return res.status(200).json(dataCart).end();
             }
             catch (error) {
@@ -62,11 +62,13 @@ class CartHandler {
         });
         this.addCartItem = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { productId, cartId } = req.body;
-                if (typeof productId !== "number")
-                    return res.status(400).send({ message: "rating is not a string" });
-                const cart = yield this.repoCart.createCartItem(productId, cartId);
-                console.log(223);
+                const { productId } = req.body;
+                if (isNaN(productId))
+                    return res.status(404).json({ message: "Not a Number" });
+                const checkCart = yield this.repoCart.getCarts(res.locals.user.id);
+                if (checkCart[0].User.id !== res.locals.user.id)
+                    return res.status(403).json({ message: "You're not the owner" });
+                const cart = yield this.repoCart.addCartItem(productId, checkCart[0].id);
                 return res.status(201).json(cart).end();
             }
             catch (error) {
@@ -82,6 +84,9 @@ class CartHandler {
                 const { id } = req.body;
                 if (isNaN(id))
                     return res.status(404).json({ message: "Not a Number" });
+                const cart = yield this.repoCart.getCarts(res.locals.user.id);
+                if (cart[0].User.id !== res.locals.user.id)
+                    return res.status(403).json({ message: "You're not the owner" });
                 const result = yield this.repoCart.deleteCartItemById(id);
                 return res.status(200).json(result).end();
             }

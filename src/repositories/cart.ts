@@ -1,22 +1,21 @@
 import {PrismaClient} from "@prisma/client"
-import {IAddCart, ICartItem, ICartRepository, IGetCarts} from "."
-import {
-  DATA_CART_ITEM_SELECT,
-  DATA_CART_SELECT,
-  DATA_PRODUCT_SELECT,
-} from "../const"
+import {ICart, ICartItem, ICartRepository, ICarts} from "."
+import {DATA_CART_ITEM_SELECT, DATA_CART_SELECT} from "../const"
 
 export default class CartRepository implements ICartRepository {
   constructor(private prisma: PrismaClient) {}
 
-  public getCarts(id: number): Promise<IGetCarts> {
-    return this.prisma.cart.findUniqueOrThrow({
-      where: {id: id},
+  public getCarts(userId: string): Promise<ICarts[]> {
+    return this.prisma.cart.findMany({
+      where: {
+        User: {
+          id: userId,
+        },
+      },
       select: DATA_CART_SELECT,
     })
   }
-  public createCart(userId: string, total: number): Promise<IAddCart> {
-    console.log(userId, total)
+  public createCart(userId: string, total: number): Promise<ICart> {
     return this.prisma.cart.create({
       data: {
         total,

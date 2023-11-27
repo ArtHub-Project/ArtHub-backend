@@ -7,6 +7,7 @@ export interface IAddCartItemDto {
 
 export interface ICartItemDto {
   id: number
+  cartId: number
   productId: number
 }
 
