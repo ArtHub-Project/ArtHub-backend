@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  api:
+    build: .
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT}
+      - JWT_SECRET=${JWT_SECRET}
+    ports:
+      - 8080:8080
+    depends_on:
+      - arthub
+  arthub:
+    image: postgres:16
+    environment:
+      - POSTGRES_PASSWORD=academy
+    volumes:
+      - arthub-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+volumes:
+  arthub-db:
+    name: fd8369caaffe27d59d4250b7cd325e8eaf1c5675948ac03a0ef2ee74d9a223d4
