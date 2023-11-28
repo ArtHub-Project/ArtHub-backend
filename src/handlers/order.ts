@@ -37,8 +37,9 @@ export default class OrderHandler implements IOrderHandler {
         const { id, productId } = CartItem[i];
         const dataItem = { orderId, id, productId };
         OrderItems.push(dataItem);
-        await this.repoOrder.createOderItem(CartItem[i].productId, orderId);
-        await this.repoCart.deleteCartItemById(CartItem[i].id);
+        await this.repoOrder.createOderItem(productId, orderId);
+        await this.repoCart.deleteCartItemById(id);
+     
       }
       const dataOrder = {
         id: orderId,

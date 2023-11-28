@@ -48,7 +48,7 @@ class CartHandler {
         });
         this.createCart = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const { total = 0 } = req.body;
+                let total = 0;
                 const dataCart = yield this.repoCart.createCart(res.locals.user.id, total);
                 return res.status(200).json(dataCart).end();
             }

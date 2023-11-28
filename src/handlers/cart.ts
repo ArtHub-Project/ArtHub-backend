@@ -38,7 +38,7 @@ export default class CartHandler implements ICartHandler {
 
   public createCart: ICartHandler["createCart"] = async (req, res) => {
     try {
-      const { total = 0 } = req.body;
+      let total = 0
       const dataCart = await this.repoCart.createCart(
         res.locals.user.id,
         total

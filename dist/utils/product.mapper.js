@@ -13,5 +13,5 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (product) => {
     const _a = product.User, { registeredAt } = _a, userInfo = __rest(_a, ["registeredAt"]), { createdAt, updatedAt } = product, productInfo = __rest(product, ["User", "createdAt", "updatedAt"]);
-    return Object.assign(Object.assign({}, productInfo), { postedBy: Object.assign(Object.assign({}, userInfo), { registeredAt: registeredAt.toISOString() }), createdAt: createdAt.toISOString(), updatedAt: updatedAt.toISOString() });
+    return Object.assign(Object.assign({}, productInfo), { User: Object.assign(Object.assign({}, userInfo), { registeredAt: registeredAt.toISOString() }), createdAt: createdAt.toISOString(), updatedAt: updatedAt.toISOString() });
 };
