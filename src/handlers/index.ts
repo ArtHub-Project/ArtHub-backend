@@ -84,9 +84,8 @@ export interface ICartHandler {
     AuthStatus
   >;
   deleteCartItemById: RequestHandler<
-    {},
-    ICartItemDto | IErrorDto,
     ID,
+    ICartItemDto | IErrorDto,
     undefined,
     AuthStatus
   >;
