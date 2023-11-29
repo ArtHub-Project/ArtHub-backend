@@ -69,10 +69,9 @@ userRouter.post("/", userHandler.registration);
 
 productRouter.get("/", productHandler.getAllProducts);
 productRouter.get("/:id", productHandler.getProductById);
-productRouter.post("/",jwtMiddleware.auth, productHandler.createProduct);
-productRouter.patch("/:id",jwtMiddleware.auth, productHandler.updateProduct);
-productRouter.delete("/:id",jwtMiddleware.auth, productHandler.deleteProduct);
-
+productRouter.post("/", jwtMiddleware.auth, productHandler.createProduct);
+productRouter.patch("/:id", jwtMiddleware.auth, productHandler.updateProduct);
+productRouter.delete("/:id", jwtMiddleware.auth, productHandler.deleteProduct);
 
 cartRouter.post("/add", jwtMiddleware.auth, cartHandler.addCartItem);
 cartRouter.delete(
