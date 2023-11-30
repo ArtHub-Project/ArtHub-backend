@@ -1,6 +1,7 @@
-import {PrismaClient} from "@prisma/client"
-import {ICart, ICartItem, ICartRepository, ICarts} from "."
-import {DATA_CART_ITEM_SELECT, DATA_CART_SELECT} from "../const"
+import { PrismaClient } from "@prisma/client";
+import { ICart, ICartItem, ICartRepository, ICarts } from ".";
+import { DATA_CART_ITEM_SELECT, DATA_CART_SELECT } from "../const";
+import { IErrorDto } from "../dto/error";
 
 export default class CartRepository implements ICartRepository {
   constructor(private prisma: PrismaClient) {}
@@ -13,18 +14,18 @@ export default class CartRepository implements ICartRepository {
         },
       },
       select: DATA_CART_SELECT,
-    })
+    });
   }
   public createCart(userId: string, total: number): Promise<ICart> {
     return this.prisma.cart.create({
       data: {
         total,
         User: {
-          connect: {id: userId},
+          connect: { id: userId },
         },
       },
       select: DATA_CART_SELECT,
-    })
+    });
   }
   public addCartItem(productId: number, cartId: number): Promise<ICartItem> {
     return this.prisma.cartItem.create({
@@ -33,11 +34,14 @@ export default class CartRepository implements ICartRepository {
         productId,
       },
       select: DATA_CART_ITEM_SELECT,
-    })
+    });
   }
   public deleteCartItemById(id: number): Promise<ICartItem> {
     return this.prisma.cartItem.delete({
-      where: {id: Number(id)},
-    })
+      where: { id: Number(id) },
+    });
+  }
+  public async deleteCartItem(): Promise<void> {
+    await this.prisma.cartItem.deleteMany({});
   }
 }
