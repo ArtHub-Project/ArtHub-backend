@@ -11,8 +11,9 @@ export default class CartHandler implements ICartHandler {
     res
   ) => {
     try {
-      const [{id, total, createdAt, ...resultCart}] =
-        await this.repoCart.getCarts(res.locals.user.id);
+      const [{id: Id, total, ...resultCart}] = await this.repoCart.getCarts(
+        res.locals.user.id
+      );
       let sum = 0;
       for (let i = 0; i < resultCart.CartItem.length; i++) {
         const {price} = await this.repoProduct.getProductById(
@@ -22,7 +23,7 @@ export default class CartHandler implements ICartHandler {
       }
       return res
         .status(200)
-        .json({id, total: sum, createdAt: createdAt.toString(), ...resultCart})
+        .json({id: Id, total: sum, ...resultCart})
         .end();
     } catch (error) {
       console.log(error);
@@ -35,16 +36,12 @@ export default class CartHandler implements ICartHandler {
 
   public createCart: ICartHandler["createCart"] = async (req, res) => {
     try {
-      const {total} = req.body;
-      const {createdAt, ...dataCart} = await this.repoCart.createCart(
+      let total = 0;
+      const dataCart = await this.repoCart.createCart(
         res.locals.user.id,
         total
       );
-
-      return res
-        .status(200)
-        .json({createdAt: createdAt.toString(), ...dataCart})
-        .end();
+      return res.status(200).json(dataCart).end();
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
@@ -78,7 +75,7 @@ export default class CartHandler implements ICartHandler {
     res
   ) => {
     try {
-      const {id} = req.body;
+      const id = Number(req.params.id);
       if (isNaN(id)) return res.status(404).json({message: "Not a Number"});
       const cart = await this.repoCart.getCarts(res.locals.user.id);
       if (cart[0].User.id !== res.locals.user.id)

@@ -14,14 +14,14 @@ export interface ICartItemDto {
 export interface ICartDto {
   id: number;
   total: number;
-  createdAt: string;
+  createdAt: Date;
   User: IUser;
 }
 
 export interface IGetCartsDto {
   id: number;
   total: number;
-  createdAt: string;
+  createdAt: Date;
   User: IUser;
   CartItem: ICartItem[];
 }

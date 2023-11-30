@@ -75,7 +75,7 @@ productRouter.delete("/:id", jwtMiddleware.auth, productHandler.deleteProduct);
 
 cartRouter.post("/add", jwtMiddleware.auth, cartHandler.addCartItem);
 cartRouter.delete(
-  "/delete",
+  "/delete/:id",
   jwtMiddleware.auth,
   cartHandler.deleteCartItemById
 );
