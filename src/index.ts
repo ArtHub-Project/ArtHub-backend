@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import express from "express";
 import {
   ICartRepository,
@@ -74,6 +74,7 @@ productRouter.patch("/:id", jwtMiddleware.auth, productHandler.updateProduct);
 productRouter.delete("/:id", jwtMiddleware.auth, productHandler.deleteProduct);
 
 cartRouter.post("/add", jwtMiddleware.auth, cartHandler.addCartItem);
+cartRouter.delete("/delete", jwtMiddleware.auth, cartHandler.deleteCartItem);
 cartRouter.delete(
   "/delete/:id",
   jwtMiddleware.auth,

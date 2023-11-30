@@ -1,22 +1,22 @@
-import {RequestHandler} from "express";
-import {ICredentialDto, ILoginDto} from "../dto/auth";
-import {IErrorDto} from "../dto/error";
-import {ICreateUserDto, IUserDto} from "../dto/user";
-import {AuthStatus} from "../middlewares/jwt";
+import { RequestHandler } from "express";
+import { ICredentialDto, ILoginDto } from "../dto/auth";
+import { IErrorDto } from "../dto/error";
+import { ICreateUserDto, IUserDto } from "../dto/user";
+import { AuthStatus } from "../middlewares/jwt";
 import {
   IProductDto,
   IcreateProductDto,
   IupdateProductDto,
 } from "../dto/product";
-import {IOrders, IProduct} from "../repositories";
+import { IOrders, IProduct } from "../repositories";
 import {
   ICartDto,
   ICartItemDto,
   IAddCartItemDto,
   IGetCartsDto,
 } from "../dto/cart";
-import {IOrderDto} from "../dto/order";
-import {Product} from "@prisma/client";
+import { IOrderDto } from "../dto/order";
+import { Product } from "@prisma/client";
 
 export interface ID {
   id: number;
@@ -39,7 +39,7 @@ export interface IUserHandler {
 
 export interface IProductHandler {
   getAllProducts: RequestHandler<{}, IProductDto[] | IErrorDto>;
-  getProductById: RequestHandler<{id: string}, IProduct | IErrorDto>;
+  getProductById: RequestHandler<{ id: string }, IProduct | IErrorDto>;
   createProduct: RequestHandler<
     {},
     IProductDto | IErrorDto,
@@ -86,6 +86,13 @@ export interface ICartHandler {
   deleteCartItemById: RequestHandler<
     ID,
     ICartItemDto | IErrorDto,
+    undefined,
+    AuthStatus
+  >;
+  deleteCartItem: RequestHandler<
+    {},
+    IErrorDto,
+    undefined,
     undefined,
     AuthStatus
   >;
